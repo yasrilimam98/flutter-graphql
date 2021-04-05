@@ -26,7 +26,24 @@ class ReminderDetail extends StatelessWidget {
           ),
         ),
         padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Text(recipe.name),
+        child: CustomScrollView(
+          slivers: [
+            SliverList(
+              delegate: SliverChildListDelegate([
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 40),
+                    Text(recipe.name,
+                        style: CupertinoTheme.of(context)
+                            .textTheme
+                            .navLargeTitleTextStyle)
+                  ],
+                )
+              ]),
+            )
+          ],
+        ),
       ),
     );
   }
