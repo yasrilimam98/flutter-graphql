@@ -8,8 +8,17 @@ import 'package:get_it/get_it.dart';
 import 'package:rm_graphql_client/rm_graphql_client.dart';
 
 class ReminderDetail extends StatelessWidget {
+  // Panggil dari database recipe
   final GFetchRecipeListData_recipes recipe;
-  const ReminderDetail({Key key, @required this.recipe}) : super(key: key);
+// Panggil data table ingredients untuk di tampilkan
+  final GFetchRecipeIngredientsReq ingredientsReq;
+
+  ReminderDetail({Key key, @required this.recipe})
+      // Ambil dari variabel Query Graphql
+      : ingredientsReq = GFetchRecipeIngredientsReq((b) {
+          return b..vars.where.recipe_id.G_eq = recipe.id;
+        }),
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -65,8 +74,32 @@ class ReminderDetail extends StatelessWidget {
                             fontSize: 25,
                           ),
                     ),
-                    // Membuat proses loading
-                    CircularProgressIndicator(),
+                    SizedBox(height: 20),
+                    Operation(
+                      client: GetIt.instance<Client>(),
+                      operationRequest: ingredientsReq,
+                      builder: (context,
+                          OperationResponse<GFetchRecipeIngredientsData,
+                                  GFetchRecipeIngredientsVars>
+                              response) {
+                        if (response.loading) {
+                          return Center(child: CircularProgressIndicator());
+                        }
+
+                        print(response.data.ingredients);
+
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            for (var ingredients
+                                in response.data.ingredients) ...[
+                              Text(ingredients.name),
+                              SizedBox(height: 10),
+                            ],
+                          ],
+                        );
+                      },
+                    ),
                     SizedBox(height: 40),
                     Center(
                       child: CupertinoButton(
@@ -77,6 +110,7 @@ class ReminderDetail extends StatelessWidget {
                         child: Text('Back'),
                       ),
                     ),
+                    SizedBox(height: 40),
                   ],
                 )
               ]),
