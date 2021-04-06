@@ -57,13 +57,25 @@ class ReminderDetail extends StatelessWidget {
                     ),
                     SizedBox(height: 20),
                     Text(
-                      'ingredients',
+                      'Noted',
                       style: CupertinoTheme.of(context)
                           .textTheme
                           .navLargeTitleTextStyle
                           .copyWith(
                             fontSize: 25,
                           ),
+                    ),
+                    // Membuat proses loading
+                    CircularProgressIndicator(),
+                    SizedBox(height: 40),
+                    Center(
+                      child: CupertinoButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        color: Colors.blue,
+                        child: Text('Back'),
+                      ),
                     ),
                   ],
                 )
