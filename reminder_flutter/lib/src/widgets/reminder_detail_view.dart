@@ -37,7 +37,34 @@ class ReminderDetail extends StatelessWidget {
                     Text(recipe.name,
                         style: CupertinoTheme.of(context)
                             .textTheme
-                            .navLargeTitleTextStyle)
+                            .navLargeTitleTextStyle),
+                    SizedBox(height: 20),
+                    Container(
+                      width: double.infinity,
+                      clipBehavior: Clip.antiAlias,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child:
+                          Image.network(recipe.image_url, fit: BoxFit.fitWidth),
+                    ),
+                    SizedBox(height: 20),
+                    Text(
+                      recipe.description,
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    Text(
+                      'ingredients',
+                      style: CupertinoTheme.of(context)
+                          .textTheme
+                          .navLargeTitleTextStyle
+                          .copyWith(
+                            fontSize: 25,
+                          ),
+                    ),
                   ],
                 )
               ]),
